@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+    db-finance:
+        image: postgres:15.10
+        hostname: db_finance 
+        container_name: db_finance 
+        labels:
+            - "docker-volume-backup.stop-during-backup=true"
+            # Traefik TCP configuration for postgres
+            - "traefik.enable=true"
+            - "traefik.tcp.routers.db-finance.rule=HostSNI(`db-finance.${DOMAIN}`)"
+            - "traefik.tcp.routers.db-finance.entrypoints=websecure"
+            - "traefik.tcp.routers.db-finance.tls=true"
+            - "traefik.tcp.routers.db-finance.tls.certresolver=letsencrypt"
+            - "traefik.tcp.services.db-finance.loadbalancer.server.port=5432"
+        restart: always
+        env_file:
+            - .secrets
+        networks:
+            - private_network
+        volumes:
+            - /mnt/data/db-finance/data:/var/lib/postgresql/data/
+
+    pgadmin:
+        image: dpage/pgadmin4
+        restart: always
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.db-finance.entrypoints=websecure"
+            - "traefik.http.routers.db-finance.rule=Host(`db-finance.${DOMAIN}`)"
+            - "traefik.http.routers.db-finance.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.db-finance.tls=true"
+        env_file:
+            - .secrets
+        depends_on:
+          - db-finance
+        volumes:
+            - /mnt/data/db-finance-pgadmin/data:/var/lib/pgadmin/
+        networks:
+            - private_network

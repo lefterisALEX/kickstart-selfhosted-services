@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    environment:
+    - TZ=Europe/Amsterdam
+    networks:
+      - private_network
+    volumes:
+      - /mnt/data/mosquitto/config:/mosquitto/config
+      - /mnt/data/mosquitto/data:/mosquitto/data
+      - /mnt/data/mosquitto/log:/mosquitto/log
+      - /mnt/data/mosquitto/pwfile:/mosquitto/pwfile
+
+    restart: always

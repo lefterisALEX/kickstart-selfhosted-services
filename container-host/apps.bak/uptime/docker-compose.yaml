@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.16
+    container_name: uptime-kuma
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.uptime.entrypoints=websecure"
+      - "traefik.http.routers.uptime.rule=Host(`uptime.${DOMAIN}`)"
+      - "traefik.http.routers.uptime.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.uptime.tls=true"
+    networks:
+      - private_network
+    volumes:
+      - /mnt/data/uptime-kuma/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always

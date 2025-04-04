@@ -1,0 +1,42 @@
+version: "3.8"
+
+name: traefik
+x-router-name: &app_name "dashboard"
+
+services:
+  traefik:
+    image: traefik:v3.3
+    container_name: traefik
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    networks:
+      private_network:
+    env_file:
+      - .secrets
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /mnt/data/traefik/letsencrypt:/letsencrypt
+    command:
+      # - "--log.level=DEBUG"
+      # - "--api.insecure=true"
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.letsencrypt.acme.email=${EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+    restart: always
+

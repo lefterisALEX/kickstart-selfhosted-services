@@ -1,0 +1,27 @@
+version: "3"
+services:  
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: unless-stopped
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    hostname: pihole
+    dns:
+      - 9.9.9.9 # 
+    environment:
+      TZ: "Europe/Amsterdam"
+      WEBPASSWORD: "" # Blank password - Can be whatever you want.
+      ServerIP: 172.100.1.3 # Internal IP of pihole
+      DNS1: 9.9.9.9 
+      DNS2: 149.112.112.112
+    # Volumes store your data between container upgrades
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    # https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - private_network
+    volumes:
+    - /mnt/data/pihole/etc-pihole:/etc/pihole
+    - /mnt/data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d

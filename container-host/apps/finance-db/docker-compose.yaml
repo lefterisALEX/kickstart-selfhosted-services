@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+    finance-db:
+        image: mariadb:11.4.2
+        hostname: finance_db
+        container_name: finance_db
+        labels:
+            - "docker-volume-backup.stop-during-backup=true"
+            # Traefik TCP configuration for MariaDB
+            - "traefik.enable=true"
+            - "traefik.tcp.routers.finance-db.rule=HostSNI(`mysql.${DOMAIN}`)"
+            - "traefik.tcp.routers.finance-db.entrypoints=websecure"
+            - "traefik.tcp.routers.finance-db.tls=true"
+            - "traefik.tcp.routers.finance-db.tls.certresolver=letsencrypt"
+            - "traefik.tcp.services.finance-db.loadbalancer.server.port=3306"
+        restart: always
+        env_file:
+            - .secrets
+        networks:
+            - private_network
+        volumes:
+            - /mnt/data/finance-db/data:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.finance-db.entrypoints=websecure"
+            - "traefik.http.routers.finance-db.rule=Host(`finance-db.${DOMAIN}`)"
+            - "traefik.http.routers.finance-db.tls.certresolver=letsencrypt"
+            - "traefik.http.routers.finance-db.tls=true"
+        environment:
+            - PMA_HOST=finance-db
+            - PMA_PORT=3306
+        networks:
+            - private_network

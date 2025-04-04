@@ -1,0 +1,107 @@
+#https://github.com/Haxxnet/Compose-Examples/tree/main/examples/grafana-monitoring
+version: "2"
+
+services:
+  loki:
+    image: grafana/loki:latest
+    hostname: loki
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.loki.entrypoints=websecure"
+      - "traefik.http.routers.loki.rule=Host(`loki.${DOMAIN}`)"
+      - "traefik.http.routers.loki.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.loki.tls=true"
+    container_name: loki
+    volumes:
+      - /mnt/data/grafana/volume-data/loki:/etc/loki # place loki-config.yml
+    networks:
+      - private_network
+    restart: unless-stopped
+    user: 1000:1000
+    command: -config.file=/etc/loki/loki-config.yml  
+
+  promtail:
+    image: grafana/promtail:latest
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    container_name: promtail
+    networks:
+      - private_network
+    depends_on:
+      - loki
+    hostname: promtail
+    volumes:
+      - /var/log:/var/log:ro # let promtail access the docker host's log files
+      - /mnt/data/grafana/volume-data/promtail:/etc/promtail # place promtail-config.yml
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/promtail-config.yml
+
+  influxdb:
+    image: influxdb:1.8.10
+    labels:
+      - "docker-volume-backup.stop-during-backup=true"
+    container_name: influxdb
+    networks:
+      - private_network
+    hostname: influxdb
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/grafana/volume-data/influxdb/data:/var/lib/influxdb
+      - /mnt/data/grafana/volume-data/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro # place infuxdb.conf
+      - /mnt/data/grafana/volume-data/influxdb/init:/docker-entrypoint-initdb.d # place create-database.iql for database init
+    # environment:
+    #   - INFLUXDB_ADMIN_USER=admin
+    #   - INFLUXDB_ADMIN_PASSWORD=SuperDuperAdminPW
+    env_file: 
+     - .secrets
+
+  telegraf:
+    image: telegraf:latest
+    restart: unless-stopped
+    networks:
+      - private_network
+    #user: telegraf:$(stat -c '%g' /var/run/docker.sock) # see: https://www.influxdata.com/blog/docker-run-telegraf-as-non-root/
+    user: 0:0
+    container_name: telegraf
+    hostname: telegraf
+    dns:
+      - 1.1.1.1
+      - 9.9.9.9
+    depends_on:
+      - influxdb
+    volumes:
+      - /mnt/data/grafana/volume-data/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro # place telegraf.conf
+      - /:/hostfs:ro
+      - /etc:/hostfs/etc:ro
+      - /proc:/hostfs/proc:ro
+      - /sys:/hostfs/sys:ro
+      - /var/run/utmp:/var/run/utmp:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - HOST_ETC=/hostfs/etc
+      - HOST_PROC=/hostfs/proc
+      - HOST_SYS=/hostfs/sys
+      - HOST_MOUNT_PREFIX=/hostfs
+
+  grafana:
+    container_name: grafana
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)"
+      - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.grafana.tls=true"
+      - "docker-volume-backup.stop-during-backup=true"
+    hostname: grafana
+    user: 1000:1000
+    networks:
+      - private_network
+    depends_on:
+      - influxdb
+      - loki
+      - promtail
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    volumes:
+      - /mnt/data/grafana/volume-data/grafana:/var/lib/grafana
