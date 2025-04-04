@@ -3,20 +3,20 @@ name: Deploy
 
 # Controls when the action will run. Invokes the workflow on push events but only for the main branch
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - "infra/**"
-      - "container-host/**"
-      - ".github/workflows/**" 
-      - "!container-host/app/**"
+  # push:
+  #   branches: [ main ]
+  #   paths:
+  #     - "infra/**"
+  #     - "containers-host/**"
+  #     - ".github/workflows/**" 
+  #     - "!containers-host/app/**"
   workflow_dispatch:
 
 env:
   tf_version: '1.8.1'
   tg_version: '0.67.0'
   infra: infra
-  container_host: container-host
+  container_host: containers-host
   TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
 permissions:
   id-token: write # This is required for requesting the JWT

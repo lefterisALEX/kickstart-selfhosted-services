@@ -3,7 +3,7 @@ include {
 }
 
 locals {
-  templates_path        = "/root/deployr/container-host/templates"
+  templates_path        = "/root/deployr/containers-host/templates"
   storage_box_url       = "//u399852.your-storagebox.de/backup"
   directories_to_create = ["/photos", "/backups", "/immich-cache", "/root/scripts", "/root/.config/rclone"]
 }
@@ -75,7 +75,7 @@ inputs = {
   github_repo_url = "https://github.com/lefterisALEX/homelabs-template"
 
   # The relative path in your repository where the parent docker-compose.yaml file is.
-  docker_compose_path = "container-host/apps"
+  docker_compose_path = "containers-host/apps"
 
   # Timezone which will be configured in your VPS.
   timezone = "Europe/Amsterdam"
