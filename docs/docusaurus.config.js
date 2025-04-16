@@ -86,18 +86,19 @@ const config = {
     ({
       image: 'img/<open-graph-card>',
       navbar: {
-        title: '<docs-title>',
+        title: 'Cloustack',
         logo: {
           alt: '<logo-alt>',
           src: 'img/<logo-file>'
         },
         items: [
           {
+            type: 'docSidebar',
             sidebarId: 'docsSidebar',
-            label: 'Docs'
+            label: 'Docs',
           },
           {
-            href: '<repo-url>'
+            href: 'https://github.com/lefterisALEX/kickstart-selfhosted-services'
           }
         ]
       },
