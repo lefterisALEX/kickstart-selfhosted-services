@@ -95,7 +95,7 @@ const config = {
           {
             type: 'doc',
             sidebarId: 'docsSidebar',
-            docId: 'intro',  // Replace with your actual root document ID
+            docId: 'index',  // Replace with your actual root document ID
             label: 'Docs',
             position: 'left'
           },
