@@ -82,83 +82,105 @@ const config = {
   //     }),
   //   ],
   // ],
-
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/<open-graph-card>',
       navbar: {
-        title: 'CloudStack',
+        title: '<docs-title>',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: '<logo-alt>',
+          src: 'img/<logo-file>'
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            sidebarId: 'docsSidebar',
+            label: 'Docs'
           },
-          // {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/lefterisALEX/kickstart-selfhosted-services',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
+            href: '<repo-url>'
+          }
+        ]
       },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
+      colorMode: {
+        respectPrefersColorScheme: true
+      }
     }),
+  // themeConfig:
+  //   /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  //   ({
+  //     // Replace with your project's social card
+  //     image: 'img/docusaurus-social-card.jpg',
+  //     navbar: {
+  //       title: 'CloudStack',
+  //       logo: {
+  //         alt: 'My Site Logo',
+  //         src: 'img/logo.svg',
+  //       },
+  //       items: [
+  //         {
+  //           type: 'docSidebar',
+  //           sidebarId: 'tutorialSidebar',
+  //           position: 'left',
+  //           label: 'Tutorial',
+  //         },
+  //         // {to: '/blog', label: 'Blog', position: 'left'},
+  //         {
+  //           href: 'https://github.com/lefterisALEX/kickstart-selfhosted-services',
+  //           label: 'GitHub',
+  //           position: 'right',
+  //         },
+  //       ],
+  //     },
+  //     footer: {
+  //       style: 'dark',
+  //       links: [
+  //         {
+  //           title: 'Docs',
+  //           items: [
+  //             {
+  //               label: 'Tutorial',
+  //               to: '/docs/intro',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           title: 'Community',
+  //           items: [
+  //             {
+  //               label: 'Stack Overflow',
+  //               href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+  //             },
+  //             {
+  //               label: 'Discord',
+  //               href: 'https://discordapp.com/invite/docusaurus',
+  //             },
+  //             {
+  //               label: 'X',
+  //               href: 'https://x.com/docusaurus',
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           title: 'More',
+  //           items: [
+  //             {
+  //               label: 'Blog',
+  //               to: '/blog',
+  //             },
+  //             {
+  //               label: 'GitHub',
+  //               href: 'https://github.com/facebook/docusaurus',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+  //     },
+  //     prism: {
+  //       theme: prismThemes.github,
+  //       darkTheme: prismThemes.dracula,
+  //     },
+  //   }),
 };
 
 export default config;
