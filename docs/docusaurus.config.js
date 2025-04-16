@@ -93,7 +93,6 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
             sidebarId: 'docsSidebar',
             label: 'Docs',
           },
