@@ -64,10 +64,13 @@ You will need to modify the remote_state code in the parent `terrarunt.hcl` file
 :::
 
 To allow github runners to store/retrieve the state in our AWS account we do it using [OpenID Connect](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+1. Create the three required variables in github which will be used to create an AWS S3 bucket to store the terraform state.
 
-1. Create a general purpose bucket in AWS S3. Make sure you disable all public access and optionally enable Bucket Versioning.
+**AWS_ACCOUNT_ID** -> Your AWS ACCOUNT ID.  
+**AWS_REGION**  -> The AWS Region you want the bucket to be created.  
+**AWS_S3_BUCKET** -> The AWS S3 bucket name.  
 
-![](../../static/img/s3-bucket.png)
+![](../../static/img/github-set-variables.png)
 
 2. Create an IAM Policy with the following permissions attached. 
 :::info
@@ -81,7 +84,8 @@ To allow github runners to store/retrieve the state in our AWS account we do it 
             "Sid": "VisualEditor1",
             "Effect": "Allow",
             "Action": [
-                "s3:*"
+                "s3:*",
+                "s3:CreateBucket"
             ],
             "Resource": [
                 "arn:aws:s3:::terraform-state-kickstart-demo/*", 
@@ -94,7 +98,11 @@ To allow github runners to store/retrieve the state in our AWS account we do it 
 
 ![](../../static/img/iam-policy.png)
 
-3. Create a new IAM Role called **github-oidc** with the following **Custom Trust Policy**.
+2. TODO:
+Create the variable for Bucket in github.
+remove the step to create the variable for AWS REGIONB and account
+update github jobs to use the variable to generate the bucket.
+2. Create a new IAM Role called **github-oidc** with the following **Custom Trust Policy**.
 ```
 {
     "Version": "2012-10-17",
@@ -134,20 +142,12 @@ Press next and in the **Add Permissions** select the IAM policy you created earl
 
 ![](../../static/img/aws-oidc-role.png)
 
-4. Create a new Identity Provider of type "OpenID Connect" with the following Provider URL and Audience.  
+3. Create a new Identity Provider of type "OpenID Connect" with the following Provider URL and Audience.  
 **Provider URL:** `https://token.actions.githubusercontent.com`  
 **Audience:** `sts.amazonaws.com`  
 
 ![](../../static/img/iam-provider.png)
 ![](../../static/img/oidc-github.png)
-
-
-
-5. Lastly go back to your github repository and set two new variables:   
-`AWS_ACCOUNT_ID` :  Your AWS account ID  
-`AWS_REGION`: The AWS region you created the S3 bucket  
-
-![](../../static/img/github-variables.png)
 
 ## Deploy 
 
