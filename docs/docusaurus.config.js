@@ -93,11 +93,15 @@ const config = {
         },
         items: [
           {
+            type: 'doc',
             sidebarId: 'docsSidebar',
+            docId: 'intro',  // Replace with your actual root document ID
             label: 'Docs',
+            position: 'left'
           },
           {
-            href: 'https://github.com/lefterisALEX/kickstart-selfhosted-services'
+            href: 'https://github.com/lefterisALEX/kickstart-selfhosted-services',
+            position: 'right'  // Optional: positions GitHub link on right side
           }
         ]
       },
