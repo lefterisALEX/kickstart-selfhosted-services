@@ -11,6 +11,7 @@ env:
   infra: infra
   container_host: container-host
   TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+  TF_VAR_aws_s3_bucket: ${{ vars.AWS_S3_BUCKET }}
 permissions:
   id-token: write # This is required for requesting the JWT
   contents: read # This is required for actions/checkout

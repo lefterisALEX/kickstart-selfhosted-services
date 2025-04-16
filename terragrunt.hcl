@@ -1,5 +1,6 @@
 locals {
-  hcloud_token = get_env("TF_VAR_hcloud_token")
+  hcloud_token  = get_env("TF_VAR_hcloud_token")
+  aws_s3_bucket = get_env("TF_VAR_aws_s3_bucket") 
 }
 
 # generate "versions" {
@@ -34,7 +35,7 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    bucket  = "terraform-state-general"
+    bucket  = "${local.aws_s3_bucket}
     key     = "${path_relative_to_include()}/terraform.tfstate"
     region  = "eu-central-1"
     encrypt = true
