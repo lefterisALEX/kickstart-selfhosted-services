@@ -98,10 +98,6 @@ To allow github runners to store/retrieve the state in our AWS account we do it 
 
 ![](../../static/img/iam-policy.png)
 
-2. TODO:
-Create the variable for Bucket in github.
-remove the step to create the variable for AWS REGIONB and account
-update github jobs to use the variable to generate the bucket.
 2. Create a new IAM Role called **github-oidc** with the following **Custom Trust Policy**.
 ```
 {
@@ -153,6 +149,18 @@ Press next and in the **Add Permissions** select the IAM policy you created earl
 
 You can deploy now the instance by running the github action.
 ![](../../static/img/github-deploy-2.png)
+
+If all above steps are done properly the pipeline should be executed without issues.
+
+![](../../static/img/action-passed.png)
+
+If you login to tailscale you should be able to see your server be registered and connected to the tailscale network.
+
+![](../../static/img/tailscale-connected.png)
+
+Also in Hetzner you should be able to see the server running.
+
+![](../../static/img/hetzner-server-runs.png)
 ## Infisical
 
 There are stored all secrets related with your applications.  
