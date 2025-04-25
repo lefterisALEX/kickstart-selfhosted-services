@@ -6,6 +6,7 @@ locals {
   templates_path        = "/root/deployr/containers-host/templates"
   storage_box_url       = "//u399852.your-storagebox.de/backup"
   directories_to_create = ["/photos", "/backups", "/immich-cache", "/root/scripts", "/root/.config/rclone"]
+  repository            = get_env("REPOSITORY")
 }
 
 terraform {
@@ -72,7 +73,7 @@ inputs = {
   github_token = get_env("GH_TOKEN")
 
   # Your github repository URL where docker compose files are.
-  github_repo_url = "https://github.com/lefterisALEX/homelabs-template"
+  github_repo_url="https://github.com/${local.repository}"
 
   # The relative path in your repository where the parent docker-compose.yaml file is.
   docker_compose_path = "containers-host/apps"
