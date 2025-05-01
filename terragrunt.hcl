@@ -3,21 +3,6 @@ locals {
   aws_s3_bucket = get_env("TF_VAR_aws_s3_bucket") 
 }
 
-# generate "versions" {
-#   path      = "versions.tf"
-#   if_exists = "overwrite"
-#   contents  = <<EOF
-# terraform {
-#   required_providers {
-#     hcloud = {
-#       source  = "hetznercloud/hcloud"
-#       version = "1.49.1"
-#     }
-#   }
-# }
-# EOF
-# }
-
 generate "providers" {
   path      = "providers.tf"
   if_exists = "overwrite"
