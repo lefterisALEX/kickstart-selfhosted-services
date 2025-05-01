@@ -86,16 +86,6 @@ inputs = {
 
   # Custom userdata script to run during server initialization. 
   custom_userdata = [
-    "for dir in ${join(" ", local.directories_to_create)}; do mkdir -p $dir; done",
-    "BOX_USERNAME='${get_env("BOX_USERNAME")}' BOX_PASSWORD='${get_env("BOX_PASSWORD")}' envsubst < ${local.templates_path}/backup-credentials.tpl > /etc/backup-credentials.txt",
-    "grep -qF '${local.storage_box_url}/backups' /etc/fstab || echo '${local.storage_box_url}/backups /backups cifs iocharset=utf8,rw,credentials=/etc/backup-credentials.txt,uid=root,gid=root,file_mode=0660,dir_mode=0770 0 0' >> /etc/fstab",
-    "grep -qF '${local.storage_box_url}/photos' /etc/fstab || echo '${local.storage_box_url}/photos /photos cifs iocharset=utf8,rw,credentials=/etc/backup-credentials.txt,uid=root,gid=root,file_mode=0660,dir_mode=0770 0 0' >> /etc/fstab",
-    "grep -qF '${local.storage_box_url}/immich-cache' /etc/fstab || echo '${local.storage_box_url}/immich-cache /immich-cache cifs iocharset=utf8,rw,credentials=/etc/backup-credentials.txt,uid=root,gid=root,file_mode=0660,dir_mode=0770 0 0' >> /etc/fstab",
-    "mount -a",
-    "ONEDRIVE_TOKEN='${get_env("ONEDRIVE_TOKEN")}' ONEDRIVE_DRIVE_ID='${get_env("ONEDRIVE_DRIVE_ID")}' envsubst < ${local.templates_path}/rclone_config.tpl > /root/.config/rclone/rclone.conf",
-    "cp ${local.templates_path}/cleanup-homeassistant.sh /root/scripts/cleanup-homeassistant.sh",
-    "chmod +x /root/scripts/cleanup-homeassistant.sh",
-    "echo  aa'0 7 * * * root /root/scripts/cleanup-homeassistant.sh' > /etc/cron.d/cleanup-homeassistant",
   ]
 }
 
