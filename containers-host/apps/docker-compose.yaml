@@ -1,22 +1,9 @@
 version: "3"
 include:
-  - ./immich/docker-compose.yaml
   - ./traefik/docker-compose.yaml
   - ./docker-backup/docker-compose.yaml
-  - ./baikal/docker-compose.yaml
   - ./dashy/docker-compose.yaml
-  - ./homeassistant/docker-compose.yaml
-  - ./actualbudget/docker-compose.yaml
-  - ./metabase/docker-compose.yaml
-  - ./finance-db/docker-compose.yaml
-  # - ./firefly/docker-compose.yaml
   - ./uptime/docker-compose.yaml
-  # - ./grafana/docker-compose.yaml
-  # - ./prometheus/docker-compose.yaml
-  - ./freshrss/docker-compose.yaml
-  - ./finance-db-postgres/docker-compose.yaml
-  # - ./mosquitto/docker-compose.yaml
-  # - ./zigbee2mqtt/docker-compose.yaml 
 networks:
   private_network:
     name: private_network
