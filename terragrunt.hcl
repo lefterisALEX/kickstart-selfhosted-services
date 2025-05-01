@@ -35,7 +35,7 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    bucket  = "${local.aws_s3_bucket}
+    bucket  = "${local.aws_s3_bucket}"
     key     = "${path_relative_to_include()}/terraform.tfstate"
     region  = "eu-central-1"
     encrypt = true
