@@ -194,7 +194,15 @@ Now you should have 3 new secrets stored in github related with Infisical.
 
 You will need to have a domain (or subdomain) with an A record pointing to your Private IP of your hetzner server.
 Additionally LetsEncrypt is managing the rotation of the TLS certificate , using DNS challenge. 
-for that you will need to create an API token with the following permissions for your zone.
+
+If you do not have a domain already some cheap options are:
+ - .ovh domain (~3$/year)
+ - A numeric .xyz domain (~1$/year)
+
+You need first to let Cloudflare manage your DNS record.
+
+
+For that you will need to create an API token with the following permissions for your zone.
 1. Got to Profile -> API Tokens -> Create Token > Create Custom Token
 2. Add Permissions Zone -> Zone -> Read & Zone -> DNS -> Edit . Then select specific zone  and select your domain and press Continiu to Summary. 
 3. Take the generated API token and place it in infisical in a new directlry called traefik. The secret name should be `CF_DNS_API_TOKEN` and the value the token that was generated in cloudflare.
