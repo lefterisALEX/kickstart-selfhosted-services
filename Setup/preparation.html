@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.7.0">
 <title data-rh="true">Preparation | Cloudstack</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://lefterisALEX.github.io/kickstart-selfhosted-services/img/&lt;open-graph-card&gt;"><meta data-rh="true" name="twitter:image" content="https://lefterisALEX.github.io/kickstart-selfhosted-services/img/&lt;open-graph-card&gt;"><meta data-rh="true" property="og:url" content="https://lefterisALEX.github.io/kickstart-selfhosted-services/Setup/preparation"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Preparation | Cloudstack"><meta data-rh="true" name="description" content="The following guide is going though the required preparation steps that you will need before you first run your pipeline to deploy your selfhosted services."><meta data-rh="true" property="og:description" content="The following guide is going though the required preparation steps that you will need before you first run your pipeline to deploy your selfhosted services."><link data-rh="true" rel="icon" href="/kickstart-selfhosted-services/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://lefterisALEX.github.io/kickstart-selfhosted-services/Setup/preparation"><link data-rh="true" rel="alternate" href="https://lefterisALEX.github.io/kickstart-selfhosted-services/Setup/preparation" hreflang="en"><link data-rh="true" rel="alternate" href="https://lefterisALEX.github.io/kickstart-selfhosted-services/Setup/preparation" hreflang="x-default"><link rel="stylesheet" href="/kickstart-selfhosted-services/assets/css/styles.76118980.css">
-<script src="/kickstart-selfhosted-services/assets/js/runtime~main.901305c2.js" defer="defer"></script>
+<script src="/kickstart-selfhosted-services/assets/js/runtime~main.c7eaac41.js" defer="defer"></script>
 <script src="/kickstart-selfhosted-services/assets/js/main.8995ffce.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -122,8 +122,14 @@ You will need to modify the remote_state code in the parent <code>terrarunt.hcl<
 </ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="cloudflare">Cloudflare<a href="#cloudflare" class="hash-link" aria-label="Direct link to Cloudflare" title="Direct link to Cloudflare">​</a></h2>
 <p>You will need to have a domain (or subdomain) with an A record pointing to your Private IP of your hetzner server.
-Additionally LetsEncrypt is managing the rotation of the TLS certificate , using DNS challenge.
-for that you will need to create an API token with the following permissions for your zone.</p>
+Additionally LetsEncrypt is managing the rotation of the TLS certificate , using DNS challenge.</p>
+<p>If you do not have a domain already some cheap options are:</p>
+<ul>
+<li>.ovh domain (~3$/year)</li>
+<li>A numeric .xyz domain (~1$/year)</li>
+</ul>
+<p>You need first to let Cloudflare manage your DNS record.</p>
+<p>For that you will need to create an API token with the following permissions for your zone.</p>
 <ol>
 <li>Got to Profile -&gt; API Tokens -&gt; Create Token &gt; Create Custom Token</li>
 <li>Add Permissions Zone -&gt; Zone -&gt; Read &amp; Zone -&gt; DNS -&gt; Edit . Then select specific zone  and select your domain and press Continiu to Summary.</li>
