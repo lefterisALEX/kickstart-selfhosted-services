@@ -11,7 +11,7 @@ env:
   infra: infra
   containers_host: containers-host
   TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
-  TF_VAR_aws_s3_bucket: ${{ vars.AWS_S3_BUCKET }}
+  TF_VAR_aws_s3_bucket: ${{ secrets.AWS_S3_BUCKET }}
   REPOSITORY: ${{ github.repository }}
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -28,9 +28,9 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/github-oidc
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc
           role-session-name: GitHub_to_AWS_OIDC
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Destroy Host
         uses: gruntwork-io/terragrunt-action@v2
@@ -58,9 +58,9 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/github-oidc
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc
           role-session-name: GitHub_to_AWS_OIDC
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy
         id: deploy
