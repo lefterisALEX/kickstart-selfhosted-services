@@ -4,8 +4,6 @@ include {
 
 locals {
   templates_path        = "/root/deployr/containers-host/templates"
-  storage_box_url       = "//u399852.your-storagebox.de/backup"
-  directories_to_create = ["/photos", "/backups", "/immich-cache", "/root/scripts", "/root/.config/rclone"]
   repository            = get_env("REPOSITORY")
 }
 
@@ -52,7 +50,7 @@ inputs = {
   enable_infisical = true
 
   # The API of the infisical server. If you want to use US datacenter you can comment it out or set it to https://app.infisical.com 
-  infisical_api_url = "https://app.infisical.com"
+  infisical_api_url = "https://eu.infisical.com"
 
   # Your infisical project ID, value if retrieved from the Github secret `INFISICAL_PROJECT_ID`
   infisical_project_id = get_env("INFISICAL_PROJECT_ID")
