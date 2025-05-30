@@ -7,19 +7,6 @@ services:
     labels:
       - "docker-volume-backup.stop-during-backup=true"
     image: adguard/adguardhome:v0.107.55
-    # ports:
-      # - 3000:3000/tcp # only required during initial setup
-      # - 8080:80/tcp # web interface after setup
-      # - 53:53/tcp # dns
-      # - 53:53/udp # dns
-      # - 67:67/udp # dhcp
-      # - 68:68/tcp # dhcp
-      # - 68:68/udp # dhcp
-      # - 784:784/udp # dns-over-quic
-      # - 853:853/tcp # dns over tls
-      # - 853:853/udp # dns over tls
-      # - 5443:5443/tcp # dnscrypt
-      # - 5443:5443/udp # dnscrypt
     restart: unless-stopped
     networks:
       - private_network

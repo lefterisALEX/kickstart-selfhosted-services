@@ -7,7 +7,6 @@ services:
     container_name: backup-volumes
     image: offen/docker-volume-backup:latest
     restart: always
-    # env_file: ./backup.env 
     environment:
       BACKUP_FILENAME: backup-%Y-%m-%dT%H-%M-%S.tar.gz
       BACKUP_CRON_EXPRESSION: "3 3 * * *"
