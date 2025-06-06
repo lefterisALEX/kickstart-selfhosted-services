@@ -5,6 +5,7 @@ include {
 locals {
   templates_path        = "/root/deployr/containers-host/templates"
   repository            = get_env("REPOSITORY")
+  directories_to_create = ["/backups", "/root/scripts", "/root/.config/rclone"]
 }
 
 terraform {
@@ -84,6 +85,7 @@ inputs = {
 
   # Custom userdata script to run during server initialization. 
   custom_userdata = [
+    "for dir in ${join(" ", local.directories_to_create)}; do mkdir -p $dir; done",
   ]
 }
 
